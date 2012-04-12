@@ -1,0 +1,230 @@
+#!/usr/bin/env php
+<?php
+
+require('rs.php');
+
+class Env {
+	public $App;
+	public $Conn;
+	public $UsagePref;
+}
+
+function GetAppDataDir($app) {
+
+	$home = getenv('HOME');
+	return "$home/.$app";
+}
+
+function LoadToken($app) {
+
+	$confDir = GetAppDataDir($app);
+	$token = @file_get_contents("$confDir/.token");
+	return $token;
+}
+
+function SaveToken($app, $token) {
+
+	$confDir = GetAppDataDir($app);
+	if (file_put_contents("$confDir/.token", $token) === FALSE) {
+		echo "SaveToken failed!";
+		exit(-1);
+	}
+}
+
+function Usage($usage, $qbox) {
+
+	echo "Usage: " . $qbox->UsagePref . "$usage\n";
+	exit(-1);
+}
+
+function Login($args, $qbox) {
+
+	if (count($args) < 3) {
+		Usage("login <Username> <Password>", $qbox);
+	}
+
+	$client = QBox_OAuth2_NewClient();
+
+	list($code, $result) = QBox_OAuth2_ExchangeByPassword($client, $args[1], $args[2]);
+	if ($code != 200) {
+		$msg = QBox_ErrorMessage($code, $result);
+		echo "LoginByPassword failed: $code - $msg\n";
+		exit(-1);
+	}
+
+	SaveToken($qbox->App, $result['refresh_token']);
+}
+
+function TryLogin($qbox) {
+
+	$refreshToken = LoadToken($qbox->App);
+	if (empty($refreshToken)) {
+		echo "Please login first to execute this command!\n";
+		exit(-1);
+	}
+
+	$client = QBox_OAuth2_NewClient();
+
+	list($code, $result) = QBox_OAuth2_ExchangeByRefreshToken($client, $refreshToken);
+	if ($code != 200) {
+		$msg = QBox_ErrorMessage($code, $result);
+		echo "LoginByRefreshToken failed: $code - $msg\n";
+		exit(-1);
+	}
+
+	$qbox->Conn = $client;
+}
+
+function Put($args, $qbox) {
+
+	if (count($args) < 4) {
+		Usage("put <Table> <Key> <LocalFile>", $qbox);
+	}
+
+	$rs = QBox_RS_NewService($qbox->Conn, $args[1]);
+
+	$mime = mime_content_type($args[3]);
+	echo "MimeType: $mime\n";
+	list($result, $code, $error) = $rs->PutFile($args[2], $mime, $args[3]);
+	if ($code != 200) {
+		$msg = QBox_ErrorMessage($code, $error);
+		echo "Put failed: $code - $msg\n";
+		exit(-1);
+	}
+	var_dump($result);
+}
+
+function PutDir($args, $qbox) {
+
+	if (count($args) < 3) {
+		Usage("putdir <Table> <LocalDir>", $qbox);
+		exit(-1);
+	}
+
+	$rs = QBox_RS_NewService($qbox->Conn, $args[1]);
+
+	$dir = $args[2];
+	$filelist = array();
+	glob_r($filelist, $dir);
+	$prefix = strlen($dir) + 1;
+	foreach ($filelist as $filepath) {
+		$key = substr($filepath, $prefix);
+		$mime = mime_content_type($filepath);
+		echo "MimeType: $mime\n";
+		list($result, $code, $error) = $rs->PutFile($key, $mime, $filepath);
+		if ($code != 200) {
+			$msg = QBox_ErrorMessage($code, $error);
+			echo "Put failed: $code - $msg\n";
+			exit(-1);
+		} else {
+			echo "Successfully put: $filepath\n\n";
+		}
+	}
+}
+
+function CheckDomain($domain) {
+
+	if (substr($domain, 0, 7) === 'http://') {
+		return substr($domain, 7);
+	}
+	if (substr($domain, 0, 8) === 'https://') {
+		return substr($domain, 8);
+	}
+	return $domain;
+}
+
+function Publish($args, $qbox) {
+
+	if (count($args) < 3) {
+		Usage("publish <Domain> <Tblname>", $qbox);
+	}
+
+	$rs = QBox_RS_NewService($qbox->Conn, $args[2]);
+
+	$domain = CheckDomain($args[1]);
+	list($code, $error) = $rs->Publish($domain);
+	if ($code != 200) {
+		$msg = QBox_ErrorMessage($code, $error);
+		echo "Publish failed: $code - $msg\n";
+		exit(-1);
+	}
+}
+
+function Unpublish($args, $qbox) {
+
+	if (count($args) < 2) {
+		Usage("unpublish <Domain>", $qbox);
+	}
+
+	$rs = QBox_RS_NewService($qbox->Conn);
+
+	$domain = CheckDomain($args[1]);
+	list($code, $error) = $rs->Unpublish($domain);
+	if ($code != 200) {
+		$msg = QBox_ErrorMessage($code, $error);
+		echo "Unpublish failed: $code - $msg\n";
+		exit(-1);
+	}
+}
+
+function glob_r(&$dInfo, $dirname) {
+    $dirInfo = glob($dirname . '/*');
+    foreach ($dirInfo as $info) {
+        if(is_dir($info)){
+            if (!is_readable($info)){
+                die("dir $info has no permission");
+            }
+            glob_r($dInfo, $info);
+        } else {
+            $dInfo[] = $info;
+        }
+    }
+}
+
+function Help() {
+	echo "
+Usage:
+  qboxrsctl login <User> <Passwd>                    - Login
+  qboxrsctl put <Table> <Key> <LocalFile>            - Put file
+  qboxrsctl putdir <Table> <LocalDir>                - Put Dir
+  qboxrsctl publish <Domain> <Tblname>               - Publish domain from a table
+  qboxrsctl unpublish <Domain>                       - Unpublish a domain\n\n";
+}
+
+$privCommandHandlers = array(
+	'put' => 'Put',
+	'putdir' => 'PutDir',
+	'publish' => 'Publish',
+	'unpublish' => 'Unpublish'
+);
+
+$pubCommandHandlers = array(
+	'login' => 'Login'
+);
+
+if ($argc < 2) {
+	Help();
+	exit(-1);
+}
+
+array_shift($argv);
+
+$qbox = new Env;
+$qbox->App = 'qboxctl';
+$qbox->UsagePref = 'qboxrsctl ';
+
+$cmd = $argv[0];
+$f = @$pubCommandHandlers[$cmd];
+if (isset($f)) {
+	$f($argv, $qbox);
+	return;
+}
+
+TryLogin($qbox);
+$f = $privCommandHandlers[$cmd];
+if (isset($f)) {
+	$f($argv, $qbox);
+} else {
+	echo "Unknown command: $cmd\n";
+}
+
