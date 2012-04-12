@@ -1,6 +1,6 @@
 <?php
 
-require_once('oauth.php');
+require_once('oauth2.php');
 require_once('utils.php');
 
 /**

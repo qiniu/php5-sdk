@@ -1,9 +1,9 @@
 <?php
 
-require('oauth/Client.php');
-require('oauth/GrantType/IGrantType.php');
-require('oauth/GrantType/Password.php');
-require('oauth/GrantType/RefreshToken.php');
+require_once('oauth2/Client.php');
+require_once('oauth2/GrantType/IGrantType.php');
+require_once('oauth2/GrantType/Password.php');
+require_once('oauth2/GrantType/RefreshToken.php');
 
 require_once('config.php');
 
@@ -12,7 +12,7 @@ require_once('config.php');
  */
 function QBox_OAuth2_NewClient() {
 
-	$client = new OAuth2\Client(QBOX_CLIENT_ID, QBOX_CLIENT_SECRET);
+	$client = new OAuth2_Client(QBOX_CLIENT_ID, QBOX_CLIENT_SECRET);
 	$client->setAccessTokenType($client::ACCESS_TOKEN_BEARER);
 	return $client;
 }
@@ -149,4 +149,3 @@ function QBox_OAuth2_CallWithBinary($client, $url, $fp, $bytes, $timeout) {
 	}
 	return array(null, $code, $response['result']);
 }
-

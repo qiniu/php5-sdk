@@ -1,5 +1,5 @@
 
-[七牛云存储](http://docs.qiniutek.com) PHP SDK，兼容 PHP5.3 以下版本。
+[七牛云存储](http://docs.qiniutek.com) PHP SDK，兼容 PHP 以下版本（\>= 5.1.0）。
 
 ## 获取源码
 

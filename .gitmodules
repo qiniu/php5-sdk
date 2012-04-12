@@ -1,0 +1,3 @@
+[submodule "qbox/oauth2"]
+	path = qbox/oauth2
+	url = git://github.com/why404/PHP-OAuth2.git
