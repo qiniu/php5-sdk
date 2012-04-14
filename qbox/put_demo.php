@@ -25,8 +25,8 @@ if ($code != 200) {
 $tblName = 'tblName';
 $rs = QBox_RS_NewService($client, $tblName);
 
-$key = '2.jpg';
-$localFile = '2.jpg';
+$key = 'put_demo2.php';
+$localFile = __FILE__;
 
 list($result, $code, $error) = $rs->PutAuth();
 echo "===> PutAuth result:\n";

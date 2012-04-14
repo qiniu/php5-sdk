@@ -10,6 +10,10 @@ define('QBOX_REDIRECT_URI',           '<RedirectURL>');
 define('QBOX_AUTHORIZATION_ENDPOINT', '<AuthURL>');
 define('QBOX_TOKEN_ENDPOINT',         'https://acc.qbox.me/oauth2/token');
 
+define('TOKEN_ENDPOINT_FORMAT', 'https://%s/oauth2/token');
+define('TOKEN_HOST_LIST', 'acc.qbox.me|acc2.qbox.me|acc3.qbox.me');
+define('TOKEN_TOKEN_PORT', '443');
+
 //
 // QBox
 

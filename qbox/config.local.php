@@ -10,6 +10,10 @@ define('QBOX_REDIRECT_URI',           '<RedirectURL>');
 define('QBOX_AUTHORIZATION_ENDPOINT', '<AuthURL>');
 define('QBOX_TOKEN_ENDPOINT',         'http://127.0.0.1:9876/oauth2/token');
 
+define('TOKEN_ENDPOINT_FORMAT', 'http://%s/oauth2/token');
+define('TOKEN_HOST_LIST', '127.0.0.1');
+define('TOKEN_TOKEN_PORT', '9876');
+
 //
 // QBox
 

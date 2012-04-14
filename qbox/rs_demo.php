@@ -32,7 +32,7 @@ if ($code != 200) {
 $tblName = 'tblName';
 $rs = QBox_RS_NewService($client, $tblName);
 
-$key = '000-default';
+$key = '000-default1';
 $friendName = 'rs_demo.php';
 
 list($result, $code, $error) = $rs->PutAuth();
