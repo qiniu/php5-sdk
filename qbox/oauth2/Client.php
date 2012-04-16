@@ -378,6 +378,9 @@ class OAuth2_Client
         $url = '';
         if (isset($parsed["scheme"]) && isset($parsed["host"])) {
             $url = $parsed["scheme"] . "://" . $parsed["host"];
+            if (isset($parsed["port"])) {
+                $url .= ":" . $parsed["port"];
+            }
             if (isset($parsed["path"])) {
                 $url .= $parsed["path"];
             }
