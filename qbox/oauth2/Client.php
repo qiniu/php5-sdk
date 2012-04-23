@@ -221,11 +221,12 @@ class OAuth2_Client
         }
         $grantTypeObject = new $grantTypeClass();
         $grantTypeObject->validateParameters($parameters);
-        if (!defined($grantTypeClass->grant_type)) {
+        if (!defined($grantTypeClass . '::GRANT_TYPE')) {
             throw new OAuth2_Exception('Unknown constant GRANT_TYPE for class ' . $grantTypeClassName, OAuth2_Exception::GRANT_TYPE_ERROR);
         }
         #$parameters['grant_type'] = $grantTypeClass::GRANT_TYPE;
-        $parameters['grant_type'] = $grantTypeClass->grant_type;
+        $grantTypeObj = new $grantTypeClass();
+        $parameters['grant_type'] = $grantTypeObj->grant_type;
         $http_headers = array();
         switch ($this->client_auth) {
             case self::AUTH_TYPE_URI:
@@ -625,7 +626,11 @@ class OAuth2_Client
     private function convertToCamelCase($grant_type)
     {
         $parts = explode('_', $grant_type);
-        array_walk($parts, function(&$item) { $item = ucfirst($item);});
-        return implode('', $parts);
+        $new_parts = array();
+        foreach ($parts as $item) {
+            $new_parts[] = ucfirst($item);
+        }
+        return implode('', $new_parts);
     }
+
 }
