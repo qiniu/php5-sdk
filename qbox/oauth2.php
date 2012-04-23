@@ -12,7 +12,7 @@ require_once('config.php');
  */
 function QBox_OAuth2_NewClient() {
 	$client = new OAuth2_Client(QBOX_CLIENT_ID, QBOX_CLIENT_SECRET);
-	$client->setAccessTokenType($client::ACCESS_TOKEN_BEARER);
+	$client->setAccessTokenType($client->access_token_bearer);
 	return $client;
 }
 
@@ -79,28 +79,6 @@ function QBox_OAuth2_ReadTokenData($filepath = QBOX_TOKEN_TMP_FILE){
 }
 
 /**
- * Check account host is OK or not
- */
-function QBox_OAuth2_Ping($host, $port=443, $timeout=5) {
-    $fsock = fsockopen($host, $port, $errno, $errstr, $timeout);
-    return !$fsock ? false : true;
-}
-
-/**
- * Get account auth url
- */
-function QBox_OAuth2_FetchAuthUrl() {
-    $hostList = explode('|', TOKEN_HOST_LIST);
-    foreach ($hostList as $host) {
-        if (!empty($host) && QBox_OAuth2_Ping($host)){
-            return sprintf(TOKEN_ENDPOINT_FORMAT, $host);
-            break;
-        }
-    }
-    return TOKEN_ENDPOINT;
-}
-
-/**
  * Login by username & password
  */
 function QBox_OAuth2_ExchangeByPassword($client, $user, $passwd, $devid = '') {
@@ -122,7 +100,7 @@ function QBox_OAuth2_ExchangeByRefreshToken($client, $token) {
  * func Call(client *Client, url string) => (result array, code int, err Error)
  */
 function QBox_OAuth2_Call($client, $url) {
-	$response = $client->fetch($url, array(), $client::HTTP_METHOD_POST, array(), $client::HTTP_FORM_CONTENT_TYPE_APPLICATION);
+	$response = $client->fetch($url, array(), $client->http_method_post, array(), $client->http_form_content_type_application);
 
 	$code = $response['code'];
 	if ($code === 200) {
@@ -135,7 +113,7 @@ function QBox_OAuth2_Call($client, $url) {
  * func CallNoRet(client *Client, url string) => (code int, err Error)
  */
 function QBox_OAuth2_CallNoRet($client, $url) {
-	$response = $client->fetch($url, array(), $client::HTTP_METHOD_POST, array(), $client::HTTP_FORM_CONTENT_TYPE_APPLICATION);
+	$response = $client->fetch($url, array(), $client->http_method_post, array(), $client->http_form_content_type_application);
 	$code = $response['code'];
 	if ($code === 200) {
 		return array(200, null);
@@ -155,7 +133,7 @@ function QBox_OAuth2_CallWithBinary($client, $url, $fp, $bytes, $timeout) {
 		CURLOPT_TIMEOUT_MS => $timeout
 		);
 	$response = $client->fetch(
-		$url, array(), $client::HTTP_METHOD_POST, $http_headers, $client::HTTP_FORM_CONTENT_TYPE_APPLICATION, $curl_options);
+		$url, array(), $client->http_method_post, $http_headers, $client->http_form_content_type_application, $curl_options);
 	//var_dump($response);
 
 	$code = $response['code'];

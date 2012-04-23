@@ -14,6 +14,7 @@ class OAuth2_GrantType_Password implements OAuth2_GrantType_IGrantType
      * @var string  Defaults to 'password'.
      */
     const GRANT_TYPE = 'password';
+    public $grant_type = self::GRANT_TYPE;
 
     /**
      * Adds a specific Handling of the parameters

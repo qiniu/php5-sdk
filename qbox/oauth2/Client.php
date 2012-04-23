@@ -72,6 +72,10 @@ class OAuth2_Client
     const HTTP_FORM_CONTENT_TYPE_APPLICATION = 0;
     const HTTP_FORM_CONTENT_TYPE_MULTIPART = 1;
 
+    public $access_token_bearer = self::ACCESS_TOKEN_BEARER;
+    public $http_method_post = self::HTTP_METHOD_POST;
+    public $http_form_content_type_application = self::HTTP_FORM_CONTENT_TYPE_APPLICATION;
+
     /**
      * Client ID
      *
@@ -211,17 +215,17 @@ class OAuth2_Client
             throw new OAuth2_InvalidArgumentException('The grant_type is mandatory.', OAuth2_InvalidArgumentException::INVALID_GRANT_TYPE);
         }
         $grantTypeClassName = $this->convertToCamelCase($grant_type);
-        # $grantTypeClass =  __NAMESPACE__ . '\\GrantType\\' . $grantTypeClassName;
         $grantTypeClass = 'OAuth2_GrantType_' . $grantTypeClassName;
         if (!class_exists($grantTypeClass)) {
             throw new OAuth2_InvalidArgumentException('Unknown grant type \'' . $grant_type . '\'', OAuth2_InvalidArgumentException::INVALID_GRANT_TYPE);
         }
         $grantTypeObject = new $grantTypeClass();
         $grantTypeObject->validateParameters($parameters);
-        if (!defined($grantTypeClass . '::GRANT_TYPE')) {
+        if (!defined($grantTypeClass->grant_type)) {
             throw new OAuth2_Exception('Unknown constant GRANT_TYPE for class ' . $grantTypeClassName, OAuth2_Exception::GRANT_TYPE_ERROR);
         }
-        $parameters['grant_type'] = $grantTypeClass::GRANT_TYPE;
+        #$parameters['grant_type'] = $grantTypeClass::GRANT_TYPE;
+        $parameters['grant_type'] = $grantTypeClass->grant_type;
         $http_headers = array();
         switch ($this->client_auth) {
             case self::AUTH_TYPE_URI:
