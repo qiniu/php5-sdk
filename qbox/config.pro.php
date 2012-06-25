@@ -3,8 +3,8 @@
 //
 // OAuth2
 
-define('ACCESS_KEY','RLT1NBD08g3kih5-0v8Yi6nX6cBhesa2Dju4P7mT');
-define('SECRET_KEY','k6uZoSDAdKBXQcNYG3UOm4bP3spDVkTg-9hWHIKm');
+define('ACCESS_KEY','<Please apply your access key>');
+define('SECRET_KEY','<Dont send your secret key to anyone');
 
 define('QBOX_REDIRECT_URI',           '<RedirectURL>');
 define('QBOX_AUTHORIZATION_ENDPOINT', '<AuthURL>');
