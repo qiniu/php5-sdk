@@ -6,33 +6,10 @@ require('client/rs.php');
 
 $client = QBox_OAuth2_NewClient();
 
-list($code, $result) = QBox_OAuth2_ExchangeByPasswordPermanently($client, 'test@qbox.net', 'test', QBOX_TOKEN_TMP_FILE);
-if ($code != 200) {
-	$msg = QBox_ErrorMessage($code, $result);
-	echo "Login failed: $code - $msg\n";
-	exit(-1);
-}
-
-/*
-list($code, $result) = QBox_OAuth2_ExchangeByPassword($client, 'test@qbox.net', 'test');
-if ($code != 200) {
-	$msg = QBox_ErrorMessage($code, $result);
-	echo "Login failed: $code - $msg\n";
-	exit(-1);
-}
-
-list($code, $result) = QBox_OAuth2_ExchangeByRefreshToken($client, $result['refresh_token']);
-if ($code != 200) {
-	$msg = QBox_ErrorMessage($code, $result);
-	echo "LoginByRefreshToken failed: $code - $msg\n";
-	exit(-1);
-}
-*/
-
 $tblName = 'tblName';
 $rs = QBox_RS_NewService($client, $tblName);
 
-$key = '000-default1';
+$key = '000-default3';
 $friendName = 'rs_demo.php';
 
 list($result, $code, $error) = $rs->PutAuth();
