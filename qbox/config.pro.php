@@ -23,3 +23,7 @@ define('QBOX_IO_HOST', 'http://io.qbox.me');
 define('QBOX_FS_HOST', 'https://fs.qbox.me');
 define('QBOX_RS_HOST', 'http://rs.qbox.me:10100');
 
+//
+// Demo
+
+define('DEMO_DOMAIN','iovip.qbox.me');

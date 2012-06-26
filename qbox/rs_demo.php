@@ -9,7 +9,16 @@ $client = QBox_OAuth2_NewClient();
 $tblName = 'tblName';
 $rs = QBox_RS_NewService($client, $tblName);
 
-$key = '000-default3';
+list($code, $error) = $rs->Drop();
+echo "===>Drop bucket result:\n";
+if ($code == 200) {
+	echo "Drop ok!\n";
+} else {
+	$msg = QBox_ErrorMessage($code,$error);
+	echo "Drop failed:$code - $msg\n";
+}
+
+$key = '000-default';
 $friendName = 'rs_demo.php';
 
 list($result, $code, $error) = $rs->PutAuth();
@@ -18,7 +27,7 @@ if ($code == 200) {
 	var_dump($result);
 } else {
 	$msg = QBox_ErrorMessage($code, $error);
-	echo "PutFile failed: $code - $msg\n";
+	echo "PutAuth failed: $code - $msg\n";
 	exit(-1);
 }
 
@@ -30,6 +39,15 @@ if ($code == 200) {
 	$msg = QBox_ErrorMessage($code, $error);
 	echo "PutFile failed: $code - $msg\n";
 	exit(-1);
+}
+
+list($code, $error) = $rs->Publish(DEMO_DOMAIN."/".$tblName);
+echo "===> Publish result:\n";
+if ($code == 200) {
+	echo "Publish ok!\n";
+} else {
+	$msg = QBox_ErrorMessage($code, $error);
+	echo "Publish failed: $code - $msg\n";
 }
 
 list($result, $code, $error) = $rs->Stat($key);
