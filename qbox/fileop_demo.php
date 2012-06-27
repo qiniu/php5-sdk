@@ -7,8 +7,8 @@ require('fileop.php');
 $client = QBox_OAuth2_NewClient();
 
 
-$tblName = 'tblName';
-$rs = QBox_RS_NewService($client, $tblName);
+$bucket = 'bucket';
+$rs = QBox_RS_NewService($client, $bucket);
 
 list($result, $code, $error) = $rs->Get($key, $key);
 echo "===> Get $key result:\n";
@@ -25,3 +25,8 @@ $urlImageInfo = QBox_FileOp_ImageInfoURL($result['url']);
 echo "===> ImageInfo of $key:\n";
 echo file_get_contents($urlImageInfo) . "\n";
 
+$urlPreview = QBox_FileOp_ImagePreviewURL($result['url'], 1);
+$jpg = file_get_contents($urlPreview);
+file_put_contents('2_thumb_s.jpg', $jpg);
+
+echo "===> ImagePreview done and save to 2_thumb_s.jpg\n";

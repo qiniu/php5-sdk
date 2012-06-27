@@ -12,8 +12,8 @@ require_once('config.php');
  */
 function QBox_OAuth2_NewClient() {
 	$client = new OAuth2_Client('','');
-	$client->setAccessTokenType($client::ACCESS_TOKEN_QBOX,SECRET_KEY);
-	$client->setAccessToken(ACCESS_KEY);	
+	$client->setAccessTokenType($client::ACCESS_TOKEN_QBOX,QBOX_SECRET_KEY);
+	$client->setAccessToken(QBOX_ACCESS_KEY);	
 	return $client;
 }
 

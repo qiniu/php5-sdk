@@ -7,8 +7,8 @@ require('client/rs.php');
 $client = QBox_OAuth2_NewClient();
 
 
-$tblName = 'tblName';
-$rs = QBox_RS_NewService($client, $tblName);
+$bucket = 'bucket';
+$rs = QBox_RS_NewService($client, $bucket);
 
 $key = 'put_demo2.php';
 $localFile = __FILE__;
@@ -23,7 +23,7 @@ if ($code == 200) {
 	exit(-1);
 }
 
-list($result, $code, $error) = QBox_RS_PutFile($result['url'], $tblName, $key, '', $localFile, '', array('key' => $key));
+list($result, $code, $error) = QBox_RS_PutFile($result['url'], $bucket, $key, '', $localFile, '', array('key' => $key));
 echo "===> PutFile $key result:\n";
 if ($code == 200) {
 	var_dump($result);
