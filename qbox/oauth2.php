@@ -29,6 +29,7 @@ function QBox_OAuth2_exchangeRet($client, $response) {
 		if (empty($token)) {
 			return array(401, "");
 		}
+		$client->setAccessTokenType($client::ACCESS_TOKEN_BEARER);
 		$client->setAccessToken($token);
 	}
 	return array($code, $result);
