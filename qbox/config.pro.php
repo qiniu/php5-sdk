@@ -1,8 +1,5 @@
 <?php
 
-//
-// OAuth2
-
 define('QBOX_REDIRECT_URI',           '<RedirectURL>');
 define('QBOX_AUTHORIZATION_ENDPOINT', '<AuthURL>');
 define('QBOX_TOKEN_ENDPOINT',         'https://acc.qbox.me/oauth2/token');
