@@ -12,9 +12,9 @@ class QBox_RS_Service
 	public $Conn;
 	public $TableName;
 
-	public function __construct($conn, $tblName = '') {
+	public function __construct($conn, $bucket = '') {
 		$this->Conn = $conn;
-		$this->TableName = $tblName;
+		$this->TableName = $bucket;
 	}
 
 	/**
@@ -123,10 +123,10 @@ class QBox_RS_Service
 }
 
 /**
- * func NewService(conn *Client, tblName string) => (rs *Service)
+ * func NewService(conn *Client, bucket string) => (rs *Service)
  * 创建 RS 资源存储服务
  */
-function QBox_RS_NewService($conn, $tblName = '') {
-	return new QBox_RS_Service($conn, $tblName);
+function QBox_RS_NewService($conn, $bucket = '') {
+	return new QBox_RS_Service($conn, $bucket);
 }
 

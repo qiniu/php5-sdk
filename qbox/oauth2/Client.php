@@ -48,7 +48,7 @@ class OAuth2_Client
     const ACCESS_TOKEN_BEARER   = 1;
     const ACCESS_TOKEN_OAUTH    = 2;
     const ACCESS_TOKEN_MAC      = 3;
-
+    const ACCESS_TOKEN_QBOX	= 4;
     /**
     * Different Grant types
     */
@@ -307,7 +307,10 @@ class OAuth2_Client
                             OAuth2_InvalidArgumentException::REQUIRE_PARAMS_AS_ARRAY
                         );
                     }
-                    break;
+		    break;
+		case self::ACCESS_TOKEN_QBOX:
+		    $http_headers['Authorization'] = 'QBox ' . $this->generateQBOXSignature($protected_resource_url,$parameters);
+		    break;
                 case self::ACCESS_TOKEN_BEARER:
                     $http_headers['Authorization'] = 'Bearer ' . $this->access_token;
                     break;
@@ -325,6 +328,33 @@ class OAuth2_Client
         #return $this->executeRequest($protected_resource_url, $parameters, $http_method, $http_headers, $form_content_type);
         return $this->executeRequestSafely($protected_resource_url, $parameters, $http_method, $http_headers, $form_content_type);
     }
+
+
+
+          /**
+	   * Generate the QBOX signature
+	   *
+	   * @param string $url Called URL
+	   * @param array  $parameters Parameters
+	   */
+    private function generateQBOXSignature($url,$parameters){
+	$parsed_url = parse_url($url);
+	$path = $parsed_url['path'];
+	$data = $path;
+	if (isset($parsed_url['query'])) {
+		$data .= "?" . $parsed_url['query'];
+	}
+        $data .= "\n";
+
+	if($parameters){
+		if (is_array($parameters)){
+			$parameters = http_build_query($parameters);									                       }
+		$data .= $parameters;
+	}
+	$digest = QBox_Encode(hash_hmac('sha1', $data, $this->access_token_secret, true));
+	$digest = $this->access_token . ":" .$digest;
+	return $digest;
+ }
 
     /**
      * Generate the MAC signature
