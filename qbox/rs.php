@@ -26,7 +26,7 @@ class QBox_RS_Service
 		return QBox_OAuth2_Call($this->Conn, $url);
 	}
 
-	/**
+    /**
 	 * func Put(key string, mimeType string, fp File, bytes int64) => (data PutRet, code int, err Error)
 	 * 上传一个流
 	 */

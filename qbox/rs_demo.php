@@ -5,7 +5,7 @@ require('rs.php');
 require('client/rs.php');
 
 $QBOX_ACCESS_KEY	= '<Please apply your access key>';
-$QBOX_SECRET_KEY	= '<Dont send your secret key to anyone';
+$QBOX_SECRET_KEY	= '<Dont send your secret key to anyone>';
 
 $client = QBox_OAuth2_NewClient();
 
@@ -23,6 +23,16 @@ if ($code == 200) {
 
 $key = '000-default';
 $friendName = 'rs_demo.php';
+
+list($result, $code, $error) = $rs->PutFile($key, '', __FILE__);
+echo "===> PutFile result:\n";
+if ($code == 200) {
+	var_dump($result);
+} else {
+	$msg = QBox_ErrorMessage($code, $error);
+	echo "PutFile failed: $code - $msg\n";
+	exit(-1);
+}
 
 list($result, $code, $error) = $rs->PutAuth();
 echo "===> PutAuth result:\n";
