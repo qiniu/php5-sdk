@@ -6,7 +6,7 @@ require_once('curl.php');
  * func PutFile(url, key, mimeType, localFile, customMeta, callbackParams string) => (data PutRet, code int, err Error)
  * 匿名上传一个文件(上传用的临时 url 通过 $rs->PutAuth 得到)
  */
-function QBox_RS_PutFile($url, $tblName, $key, $mimeType, $localFile, $customMeta = '', $callbackParams = '') {
+function QBox_RS_PutFile($url, $tblName, $key, $mimeType, $localFile, $customMeta = '', $callbackParams = '', $upToken = '') {
 
 	if ($mimeType === '') {
 		$mimeType = 'application/octet-stream';
@@ -22,6 +22,9 @@ function QBox_RS_PutFile($url, $tblName, $key, $mimeType, $localFile, $customMet
 			$callbackParams = http_build_query($callbackParams);
 		}
 		$params['params'] = $callbackParams;
+	}
+	if ($upToken != '') {
+		$params['auth'] = $upToken;
 	}
 	$response = QBox_ExecuteRequest($url, $params, QBOX_HTTP_METHOD_POST);
 	//var_dump($response);

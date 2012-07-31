@@ -124,6 +124,20 @@ function QBox_OAuth2_CallNoRet($client, $url) {
 	return array($code, $response['result']);
 }
 
+
+/**
+ * func CallWithParams(client *Client, url string, params stringOrArray) => (result array, code int, err Error)
+ */
+function QBox_OAuth2_CallWithParams($client, $url, $params) {
+
+	$response = $client->fetch($url, $params, $client->http_method_post, array(), $client->http_form_content_type_application);
+	$code = $response['code'];
+	if ($code === 200 || $code === 298) {
+		return array($response['result'], $code, null);
+	}
+	return array(null, $code, $response['result']);
+}
+
 /**
  * func CallWithBinary(client *Client, url string, fp File, bytes int64, timeout int) => (result array, code int, err Error)
  */

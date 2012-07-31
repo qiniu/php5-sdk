@@ -151,6 +151,27 @@ class QBox_RS_Service
         $newurl = $source_url . '?' . $opWithParams . $saveAsParam;
         return QBox_OAuth2_Call($this->Conn, $newurl);
     }
+    
+    
+    public function SetProtected($protectedMode){
+    	$url = QBOX_PU_HOST . "/accessMode/" . $this->TableName . "/mode/" . $protectedMode;
+    	return QBox_OAuth2_Call($this->Conn, $url);
+    }
+    
+    public function SetSeparator($sep){
+    	$url = QBOX_PU_HOST . "/separator/" . $this->TableName . "/sep/" .QBox_Encode($sep);
+    	return QBox_OAuth2_Call($this->Conn, $url);
+    }
+    
+    public function SetStyle($name, $style){
+    	$url = QBOX_PU_HOST . "/style/" . $this->TableName . "/name/" . QBox_Encode($name) . "/style/" .QBox_Encode($style);
+    	return QBox_OAuth2_Call($this->Conn, $url);
+    }
+    
+    public function UnsetStyle($name){
+    	$url = QBOX_PU_HOST . "/unstyle/" . $this->TableName . "/name/" . QBox_Encode($name);
+    	return QBox_OAuth2_Call($this->Conn, $url);
+    }
 }
 
 /**
