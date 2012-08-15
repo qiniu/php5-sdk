@@ -2,10 +2,15 @@
 <?php
 
 require('rs.php');
+require('authtoken.php');
 require('client/rs.php');
 
 $QBOX_ACCESS_KEY	= '<Please apply your access key>';
 $QBOX_SECRET_KEY	= '<Dont send your secret key to anyone>';
+
+const DEMO_DOMAIN   = 'test.dn.qbox.me';
+
+echo time() . " ===> Start demo ...\n";
 
 $client = QBox_OAuth2_NewClient();
 
@@ -13,7 +18,7 @@ $bucket = 'bucket';
 $rs = QBox_RS_NewService($client, $bucket);
 
 list($code, $error) = $rs->Drop();
-echo "===>Drop bucket result:\n";
+echo time() . "===>Drop bucket result:\n";
 if ($code == 200) {
 	echo "Drop ok!\n";
 } else {
@@ -21,11 +26,16 @@ if ($code == 200) {
 	echo "Drop failed:$code - $msg\n";
 }
 
+
 $key = '000-default';
 $friendName = 'rs_demo.php';
 
-list($result, $code, $error) = $rs->PutFile($key, '', __FILE__);
-echo "===> PutFile result:\n";
+$key2 = '000-default2';
+$friendName2 = 'rs_demo2.php';
+
+
+list($result, $code, $error) = $rs->PutFile2($key, '', __FILE__);
+echo time() . "===> PutFile result:\n";
 if ($code == 200) {
 	var_dump($result);
 } else {
@@ -34,18 +44,12 @@ if ($code == 200) {
 	exit(-1);
 }
 
-list($result, $code, $error) = $rs->PutAuth();
-echo "===> PutAuth result:\n";
-if ($code == 200) {
-	var_dump($result);
-} else {
-	$msg = QBox_ErrorMessage($code, $error);
-	echo "PutAuth failed: $code - $msg\n";
-	exit(-1);
-}
 
-list($result, $code, $error) = QBox_RS_PutFile($result['url'], $bucket, $key, '', __FILE__, 'CustomData', array('key' => $key));
-echo "===> PutFile $key result:\n";
+$upToken = QBox_MakeAuthToken(array('expiresIn' => 3600));
+echo time() . " ===> Uptoken: $upToken\n";
+
+list($result, $code, $error) = QBox_RS_UploadFile($upToken, $bucket, $key, '', __FILE__, 'CustomData', array('key' => $key));
+echo time() . " ===> PutFile $key result:\n";
 if ($code == 200) {
 	var_dump($result);
 } else {
@@ -54,8 +58,18 @@ if ($code == 200) {
 	exit(-1);
 }
 
-list($code, $error) = $rs->Publish("iovip.qbox.me"."/".$bucket);
-echo "===> Publish result:\n";
+list($result, $code, $error) = QBox_RS_UploadFile($upToken, $bucket, $key2, '', __FILE__, 'CustomData', array('key' => $key2));
+echo time() . " ===> PutFile $key2 result:\n";
+if ($code == 200) {
+	var_dump($result);
+} else {
+	$msg = QBox_ErrorMessage($code, $error);
+	echo "PutFile failed: $code - $msg\n";
+	exit(-1);
+}
+
+list($code, $error) = $rs->Publish(DEMO_DOMAIN);
+echo time() . "===> Publish result:\n";
 if ($code == 200) {
 	echo "Publish ok!\n";
 } else {
@@ -64,7 +78,7 @@ if ($code == 200) {
 }
 
 list($result, $code, $error) = $rs->Stat($key);
-echo "===> Stat $key result:\n";
+echo time() . "===> Stat $key result:\n";
 if ($code == 200) {
 	var_dump($result);
 } else {
@@ -73,8 +87,29 @@ if ($code == 200) {
 	exit(-1);
 }
 
+list($result, $code, $error) = $rs->BatchGet(array($key, $key2));
+echo time() . " ===> BatchGet $key result:\n";
+if ($code == 200) {
+	var_dump($result);
+} else {
+	$msg = QBox_ErrorMessage($code, $error);
+	echo "BatchGet failed: $code - $msg\n";
+	exit(-1);
+}
+
+list($result, $code, $error) = $rs->BatchGet(array(array("key" => "xxxxx", "attName" => $friendName), array("key" => $key2, "attName" => $friendName2, "expires" => 604835)));
+echo time() . " ===> BatchGet $key result:\n";
+if ($code == 298) {
+	var_dump($result);
+} else {
+	$msg = QBox_ErrorMessage($code, $error);
+	echo "BatchGet failed: $code - $msg\n";
+	exit(-1);
+}
+
+
 list($result, $code, $error) = $rs->Get($key, $friendName);
-echo "===> Get $key result:\n";
+echo time() . " ===> Get $key result:\n";
 if ($code == 200) {
 	var_dump($result);
 } else {
@@ -83,8 +118,9 @@ if ($code == 200) {
 	exit(-1);
 }
 
+
 list($result, $code, $error) = $rs->GetIfNotModified($key, $friendName, $result['hash']);
-echo "===> GetIfNotModified $key result:\n";
+echo time() . "===> GetIfNotModified $key result:\n";
 if ($code == 200) {
 	var_dump($result);
 } else {
@@ -93,13 +129,13 @@ if ($code == 200) {
 	exit(-1);
 }
 
-echo "===> Display $key contents:\n";
+echo time() . "===> Display $key contents:\n";
 echo file_get_contents($result['url']);
 
-$action = '';
-if ($action == 'delete') {
+$action = 'delete';
+if ($action == 'drop') {
 	list($code, $error) = $rs->Delete($key);
-	echo "===> Delete $key result:\n";
+	echo time() . "===> Delete $key result:\n";
 	if ($code == 200) {
 		echo "Delete ok!\n";
 	} else {
@@ -109,7 +145,7 @@ if ($action == 'delete') {
 }
 else if ($action == 'drop') {
 	list($code, $error) = $rs->Drop();
-	echo "===> Drop table result:\n";
+	echo time() . "===> Drop table result:\n";
 	if ($code == 200) {
 		echo "Drop ok!\n";
 	} else {
