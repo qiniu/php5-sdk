@@ -35,7 +35,6 @@ function QBox_RS_PutFile($url, $tblName, $key, $mimeType, $localFile, $customMet
 
 /**
  * func UploadFile(upToken, key, mimeType, localFile, customMeta, callbackParams string) => (data PutRet, code int, err Error)
- * 匿名上传一个文件(上传用的临时 url 通过 $rs->PutAuth 得到)
  */
 function QBox_RS_UploadFile($upToken, $tblName, $key, $mimeType, $localFile, $customMeta = '', $callbackParams = '') {
 

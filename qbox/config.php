@@ -13,5 +13,4 @@ define('QBOX_EU_HOST', 'http://eu.qbox.me');
 $QBOX_ACCESS_KEY	= '<Please apply your access key>';
 $QBOX_SECRET_KEY	= '<Dont send your secret key to anyone>';
 
-
 $QBOX_PUT_TIMEOUT	= 300000; // 300s = 5m
