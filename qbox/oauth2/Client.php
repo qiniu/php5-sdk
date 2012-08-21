@@ -73,6 +73,7 @@ class OAuth2_Client
     const HTTP_FORM_CONTENT_TYPE_MULTIPART = 1;
 
     public $access_token_bearer = self::ACCESS_TOKEN_BEARER;
+	public $access_token_qbox = self::ACCESS_TOKEN_QBOX;
     public $http_method_post = self::HTTP_METHOD_POST;
     public $http_form_content_type_application = self::HTTP_FORM_CONTENT_TYPE_APPLICATION;
 

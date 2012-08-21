@@ -13,7 +13,7 @@ require_once('config.php');
 function QBox_OAuth2_NewClient() {
 	global $QBOX_ACCESS_KEY, $QBOX_SECRET_KEY;
 	$client = new OAuth2_Client('a75604760c4da4caaa456c0c5895c061c3065c5a', '75df554a39f58accb7eb293b550fa59618674b7d');
-	$client->setAccessTokenType($client::ACCESS_TOKEN_QBOX, $QBOX_SECRET_KEY);
+	$client->setAccessTokenType($client->access_token_qbox, $QBOX_SECRET_KEY);
 	$client->setAccessToken($QBOX_ACCESS_KEY);
 	return $client;
 }
@@ -29,7 +29,7 @@ function QBox_OAuth2_exchangeRet($client, $response) {
 		if (empty($token)) {
 			return array(401, "");
 		}
-		$client->setAccessTokenType($client::ACCESS_TOKEN_BEARER);
+		$client->setAccessTokenType($client->$access_token_bearer);
 		$client->setAccessToken($token);
 	}
 	return array($code, $result);
@@ -144,7 +144,7 @@ function QBox_OAuth2_CallWithParams($client, $url, $params) {
  */
 function QBox_OAuth2_CallWithParamsNoRet($client, $url, $params) {
 
-	$response = $client->fetch($url, $params, $client::HTTP_METHOD_POST, array(), $client::HTTP_FORM_CONTENT_TYPE_APPLICATION);
+	$response = $client->fetch($url, $params, $client->http_method_post, array(), $client->http_form_content_type_application);
 	$code = $response['code'];
 	if ($code === 200) {
 		return array(200, null);

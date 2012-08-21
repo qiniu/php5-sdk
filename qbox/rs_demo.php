@@ -8,7 +8,8 @@ require('client/rs.php');
 $QBOX_ACCESS_KEY	= '<Please apply your access key>';
 $QBOX_SECRET_KEY	= '<Dont send your secret key to anyone>';
 
-const DEMO_DOMAIN   = 'test.dn.qbox.me';
+
+define('DEMO_DOMAIN', 'test.dn.qbox.me');
 
 echo time() . " ===> Start demo ...\n";
 
