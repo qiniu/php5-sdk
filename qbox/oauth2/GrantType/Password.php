@@ -6,7 +6,7 @@ require_once('IGrantType.php');
 /**
  * Password Parameters
  */
-class OAuth2_GrantType_Password implements OAuth2_GrantType_IGrantType
+class QBox_OAuth_GrantType_Password implements QBox_OAuth_GrantType_IGrantType
 {
     /**
      * Defines the Grant Type
@@ -26,16 +26,16 @@ class OAuth2_GrantType_Password implements OAuth2_GrantType_IGrantType
     {
         if (!isset($parameters['username']))
         {
-            throw new OAuth2_InvalidArgumentException(
+            throw new QBox_OAuth_InvalidArgumentException(
                 'The \'username\' parameter must be defined for the Password grant type',
-                OAuth2_InvalidArgumentException::MISSING_PARAMETER
+                QBox_OAuth_InvalidArgumentException::MISSING_PARAMETER
             );
         }
         elseif (!isset($parameters['password']))
         {
-            throw new OAuth2_InvalidArgumentException(
+            throw new QBox_OAuth_InvalidArgumentException(
                 'The \'password\' parameter must be defined for the Password grant type',
-                OAuth2_InvalidArgumentException::MISSING_PARAMETER
+                QBox_OAuth_InvalidArgumentException::MISSING_PARAMETER
             );
         }
     }

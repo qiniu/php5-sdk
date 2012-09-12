@@ -2,7 +2,7 @@
 /**
  * Specific GrantType Interface
  */
-interface OAuth2_GrantType_IGrantType
+interface QBox_OAuth_GrantType_IGrantType
 {
     /**
      * Adds a specific Handling of the parameters

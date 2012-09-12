@@ -6,7 +6,7 @@ require_once('IGrantType.php');
 /**
  * Authorization code  Grant Type Validator
  */
-class OAuth2_GrantType_AuthorizationCode implements OAuth2_GrantType_IGrantType
+class QBox_OAuth_GrantType_AuthorizationCode implements QBox_OAuth_GrantType_IGrantType
 {
     /**
      * Defines the Grant Type
@@ -26,16 +26,16 @@ class OAuth2_GrantType_AuthorizationCode implements OAuth2_GrantType_IGrantType
     {
         if (!isset($parameters['code']))
         {
-            throw new OAuth2_InvalidArgumentException(
+            throw new QBox_OAuth_InvalidArgumentException(
                 'The \'code\' parameter must be defined for the Authorization Code grant type',
-                OAuth2_InvalidArgumentException::MISSING_PARAMETER
+                QBox_OAuth_InvalidArgumentException::MISSING_PARAMETER
             );
         }
         elseif (!isset($parameters['redirect_uri']))
         {
-            throw new OAuth2_InvalidArgumentException(
+            throw new QBox_OAuth_InvalidArgumentException(
                 'The \'redirect_uri\' parameter must be defined for the Authorization Code grant type',
-                OAuth2_InvalidArgumentException::MISSING_PARAMETER
+                QBox_OAuth_InvalidArgumentException::MISSING_PARAMETER
             );
         }
     }

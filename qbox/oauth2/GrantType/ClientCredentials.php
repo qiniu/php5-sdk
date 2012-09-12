@@ -5,7 +5,7 @@ require_once('IGrantType.php');
 /**
  * Client Credentials Parameters
  */
-class OAuth2_GrantType_ClientCredentials implements OAuth2_GrantType_IGrantType
+class QBox_OAuth_GrantType_ClientCredentials implements QBox_OAuth_GrantType_IGrantType
 {
     /**
      * Defines the Grant Type

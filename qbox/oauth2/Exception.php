@@ -1,6 +1,6 @@
 <?php
 
-class OAuth2_Exception extends Exception
+class QBox_OAuth_Exception extends Exception
 {
     const CURL_NOT_FOUND                     = 0x01;
     const CURL_ERROR                         = 0x02;
@@ -9,7 +9,7 @@ class OAuth2_Exception extends Exception
     const INVALID_ACCESS_TOKEN_TYPE          = 0x05;
 }
 
-class OAuth2_InvalidArgumentException extends InvalidArgumentException
+class QBox_OAuth_InvalidArgumentException extends InvalidArgumentException
 {
     const INVALID_GRANT_TYPE      = 0x01;
     const CERTIFICATE_NOT_FOUND   = 0x02;

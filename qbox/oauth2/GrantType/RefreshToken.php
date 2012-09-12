@@ -6,7 +6,7 @@ require_once('IGrantType.php');
 /**
  * Refresh Token  Parameters
  */
-class OAuth2_GrantType_RefreshToken implements OAuth2_GrantType_IGrantType
+class QBox_OAuth_GrantType_RefreshToken implements QBox_OAuth_GrantType_IGrantType
 {
     /**
      * Defines the Grant Type
@@ -26,9 +26,9 @@ class OAuth2_GrantType_RefreshToken implements OAuth2_GrantType_IGrantType
     {
         if (!isset($parameters['refresh_token']))
         {
-            throw new OAuth2_InvalidArgumentException(
+            throw new QBox_OAuth_InvalidArgumentException(
                 'The \'refresh_token\' parameter must be defined for the refresh token grant type',
-                OAuth2_InvalidArgumentException::MISSING_PARAMETER
+                QBox_OAuth_InvalidArgumentException::MISSING_PARAMETER
             );
         }
     }
