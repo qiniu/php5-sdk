@@ -69,7 +69,7 @@ class QBox_RS_Service
 		fclose($fp);
 		return $result;
 	}
-	
+
 	/**
 	 * func PutFile(key string, mimeType string, localFile string) => (data PutRet, code int, err Error)
 	 * 上传文件

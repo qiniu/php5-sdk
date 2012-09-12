@@ -5,13 +5,9 @@ require('rs.php');
 require('authtoken.php');
 require('client/rs.php');
 
-$QBOX_ACCESS_KEY	= '<Please apply your access key>';
-$QBOX_SECRET_KEY	= '<Dont send your secret key to anyone>';
-
-
 define('DEMO_DOMAIN', 'test.dn.qbox.me');
 
-echo time() . " ===> Start demo ...\n";
+echo time() . "===> Start demo ...\n";
 
 $client = QBox_OAuth2_NewClient();
 
@@ -19,7 +15,7 @@ $bucket = 'bucket';
 $rs = QBox_RS_NewService($client, $bucket);
 
 list($code, $error) = $rs->Drop();
-echo time() . "===>Drop bucket result:\n";
+echo time() . "===> Drop bucket result:\n";
 if ($code == 200) {
 	echo "Drop ok!\n";
 } else {
@@ -27,24 +23,11 @@ if ($code == 200) {
 	echo "Drop failed:$code - $msg\n";
 }
 
-
 $key = '000-default';
 $friendName = 'rs_demo.php';
 
 $key2 = '000-default2';
 $friendName2 = 'rs_demo2.php';
-
-
-list($result, $code, $error) = $rs->PutFile2($key, '', __FILE__);
-echo time() . "===> PutFile result:\n";
-if ($code == 200) {
-	var_dump($result);
-} else {
-	$msg = QBox_ErrorMessage($code, $error);
-	echo "PutFile failed: $code - $msg\n";
-	exit(-1);
-}
-
 
 $upToken = QBox_MakeAuthToken(array('expiresIn' => 3600));
 echo time() . " ===> Uptoken: $upToken\n";

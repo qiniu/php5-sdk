@@ -3,9 +3,6 @@
 require('eu.php');
 require('utils.php');
 
-$QBOX_ACCESS_KEY = '<Please apply your access key>';
-$QBOX_SECRET_KEY = '<Dont send your secret key to anyone>';
-
 $customer = '001';
 
 $client = QBox_OAuth2_NewClient();

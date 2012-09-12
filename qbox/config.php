@@ -9,8 +9,8 @@ define('QBOX_UP_HOST', 'http://up.qbox.me');
 define('QBOX_RS_HOST', 'http://rs.qbox.me:10100');
 define('QBOX_PU_HOST', 'http://pu.qbox.me:10200');
 define('QBOX_EU_HOST', 'http://eu.qbox.me');
-
-$QBOX_ACCESS_KEY	= '<Please apply your access key>';
-$QBOX_SECRET_KEY	= '<Dont send your secret key to anyone>';
+define('QBOX_ACCESS_KEY', 'iN7NgwM31j4-BZacMjPrOQBs34UG1maYCAQmhdCV');
+define('QBOX_SECRET_KEY', '6QTOr2Jg1gcZEWDQXKOGZh5PziC2MCV5KsntT70j');
 
 $QBOX_PUT_TIMEOUT	= 300000; // 300s = 5m
+
