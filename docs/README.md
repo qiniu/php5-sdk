@@ -10,6 +10,9 @@ SDK源码地址：[https://github.com/qiniu/php5-sdk/tags](https://github.com/qi
 
 **应用接入**
 
+
+阿凡达safe无法
+
 - [获取Access Key 和 Secret Key](#acc-appkey)
 - [签名认证](#acc-auth)
 
