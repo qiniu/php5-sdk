@@ -129,7 +129,7 @@ if ($action == 'drop') {
 }
 else if ($action == 'drop') {
 	list($code, $error) = $rs->Drop();
-	echo time() . "===> Drop table result:\n";
+	echo time() . "===> Drop bucket result:\n";
 	if ($code == 200) {
 		echo "Drop ok!\n";
 	} else {

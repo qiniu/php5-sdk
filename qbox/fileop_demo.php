@@ -6,8 +6,8 @@ require_once('fileop.php');
 
 $client = QBox_OAuth2_NewClient();
 
-$tblName = 'tblName';
-$rs = QBox_RS_NewService($client, $tblName);
+$bucketName = 'bucketName';
+$rs = QBox_RS_NewService($client, $bucketName);
 
 $key = '2.jpg';
 

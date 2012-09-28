@@ -89,7 +89,7 @@ $ vim path/to/your_project/lib/qboxsdk/config.php
     /**
      * 新建资源表只需在登录后实例化一个 QBox_RS_NewService() 对象即可
      */
-    $bucket = 'CustomTableName';
+    $bucket = 'CustomBucketName';
     $rs = QBox_RS_NewService($client, $bucket);
 
 
@@ -200,7 +200,7 @@ $params
     /**
      * 实例化资源表对象
      */
-    $bucket = 'CustomTableName';
+    $bucket = 'CustomBucketName';
     $rs = QBox_RS_NewService($client, $bucket);
 
     $fileKey = 'an_unique_key_also_can_be_a_file_name';
@@ -236,7 +236,7 @@ $params
     /**
      * 实例化资源表对象
      */
-    $bucket = 'CustomTableName';
+    $bucket = 'CustomBucketName';
     $rs = QBox_RS_NewService($client, $bucket);
 
     $fileKey = 'an_unique_key_also_can_be_a_file_name';
@@ -280,7 +280,7 @@ $params
     /**
      * 实例化资源表对象
      */
-    $bucket = 'CustomTableName';
+    $bucket = 'CustomBucketName';
     $rs = QBox_RS_NewService($client, $bucket);
 
     $fileKey = 'an_unique_key_also_can_be_a_file_name';
@@ -340,7 +340,7 @@ BatchGet() 方法有一个参数，参数类型为数组 Array，该参数可以
     /**
      * 实例化资源表对象
      */
-    $bucket = 'CustomTableName';
+    $bucket = 'CustomBucketName';
     $rs = QBox_RS_NewService($client, $bucket);
 
     $key1 = 'an_unique_key_also_can_be_a_file_name';
@@ -391,13 +391,13 @@ BatchGet() 方法有一个参数，参数类型为数组 Array，该参数可以
     /**
      * 实例化资源表对象
      */
-    $bucket = 'CustomTableName';
+    $bucket = 'CustomBucketName';
     $rs = QBox_RS_NewService($client, $bucket);
 
     $accessDomain = 'cdn.example.com';
 
     /**
-     * 将 CustomTableName 表里边的内容作为静态资源发布。
+     * 将 CustomBucketName 表里边的内容作为静态资源发布。
      * 静态资源访问的url格式为：http://$accessDomain/fileKey
      */
     list($code, $result) = $rs->Publish($accessDomain);
@@ -421,13 +421,13 @@ BatchGet() 方法有一个参数，参数类型为数组 Array，该参数可以
     /**
      * 实例化资源表对象
      */
-    $bucket = 'CustomTableName';
+    $bucket = 'CustomBucketName';
     $rs = QBox_RS_NewService($client, $bucket);
 
     $accessDomain = 'cdn.example.com';
 
     /**
-     * 将 CustomTableName 表里边的文件全部取消静态外链。
+     * 将 CustomBucketName 表里边的文件全部取消静态外链。
      */
     list($code, $result) = $rs->Unpublish($accessDomain);
     echo "===> Unpublish to $accessDomain result:\n";
@@ -450,7 +450,7 @@ BatchGet() 方法有一个参数，参数类型为数组 Array，该参数可以
     /**
      * 实例化资源表对象
      */
-    $bucket = 'CustomTableName';
+    $bucket = 'CustomBucketName';
     $rs = QBox_RS_NewService($client, $bucket);
 
     $key = 'an_unique_key_also_can_be_a_file_name';
@@ -481,14 +481,14 @@ BatchGet() 方法有一个参数，参数类型为数组 Array，该参数可以
     /**
      * 实例化资源表对象
      */
-    $bucket = 'CustomTableName';
+    $bucket = 'CustomBucketName';
     $rs = QBox_RS_NewService($client, $bucket);
 
     /**
      * 删除整个表及其所有文件
      */
 	list($code, $error) = $rs->Drop();
-	echo "===> Drop table result:\n";
+	echo "===> Drop Bucket result:\n";
 	if ($code == 200) {
 		echo "Drop $bucket ok!\n";
 	} else {
@@ -527,7 +527,7 @@ $imageDownloadURL
     /**
      * 实例化资源表对象
      */
-    $bucket = 'CustomTableName';
+    $bucket = 'CustomBucketName';
     $rs = QBox_RS_NewService($client, $bucket);
 
     $fileKey = 'an_unique_key_also_can_be_a_file_name';
@@ -596,7 +596,7 @@ $thumbType
     /**
      * 实例化资源表对象
      */
-    $bucket = 'CustomTableName';
+    $bucket = 'CustomBucketName';
     $rs = QBox_RS_NewService($client, $bucket);
 
     $fileKey = 'an_unique_key_also_can_be_a_file_name';
