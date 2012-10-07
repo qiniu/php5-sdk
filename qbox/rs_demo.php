@@ -9,6 +9,9 @@ define('DEMO_DOMAIN', 'test.dn.qbox.me');
 
 echo time() . "===> Start demo ...\n";
 
+$QBOX_ACCESS_KEY = '<Please apply your access key>';
+$QBOX_SECRET_KEY = '<Dont send your secret key to anyone>';
+
 $client = QBox_OAuth2_NewClient();
 
 $bucket = 'bucket';
