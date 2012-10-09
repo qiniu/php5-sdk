@@ -14,6 +14,15 @@ $rs = QBox_RS_NewService($client, $bucketName);
 
 $key = '2.jpg';
 
+list($code, $error) = $rs->Mkbucket($bucket);
+echo time() . " ===> Mkbucket result:\n";
+if ($code == 200) {
+	echo "Mkbucket Success!\n";
+} else {
+	$msg = QBox_ErrorMessage($code, $error);
+	echo "Buckets failed: $code - $msg\n";
+}
+
 list($result, $code, $error) = $rs->Get($key, $key);
 echo "===> Get $key result:\n";
 if ($code == 200) {

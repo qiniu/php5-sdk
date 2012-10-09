@@ -168,6 +168,24 @@ class QBox_RS_Service
 	}
 
 	/**
+	 * func Mkbucket($bucketName string) => (code int, err Error)
+	 * 创建bucket
+	 */
+	public function Mkbucket($bucketName) {
+		$url = QBOX_RS_HOST . '/mkbucket/' . $bucketName;
+		return QBox_OAuth2_CallNoRet($this->Conn, $url);
+	}
+	
+	/**
+	 * func Buckets() => array()
+	 * 列出所有的bucket
+	 */
+	public function Buckets() {
+		$url = QBOX_RS_HOST . '/buckets';
+		return QBox_OAuth2_Call($this->Conn, $url);
+	}
+	
+	/**
 	 * func Delete(key string) => (code int, err Error)
 	 * 删除资源
 	 */
