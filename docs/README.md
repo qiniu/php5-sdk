@@ -147,23 +147,23 @@ $params
 `$params`的具体规格如下
 
 	$params = array(
-		scope => <TargetBucket>, 
-		expires_in=> <ExpiresInSeconds>,
-		callback_url => <CallbackUrl>,
-		callback_body_type => <CallbackBodyType>,
-		customer => <EndUserId>
+		‘scope’ => <TargetBucket>, 
+		‘expiresIn’=> <ExpiresInSeconds>,
+		‘callbackUrl’ => <CallbackUrl>,
+		‘callbackBodyType’ => <CallbackBodyType>,
+		‘customer’ => <EndUserId>
 	)
 
 :scope
 : 必须，字符串类型（String），设定文件要上传到的目标 `bucket`
 
-:expires_in
+:expiresIn
 : 可选，数字类型，用于设置上传 URL 的有效期，单位：秒，缺省为 3600 秒，即 1 小时后该上传链接不再有效（但该上传URL在其生成之后的59分59秒都是可用的）。
 
-:callback_url
+:callbackUrl
 : 可选，字符串类型（String），用于设置文件上传成功后，七牛云存储服务端要回调客户方的业务服务器地址。
 
-:callback_body_type
+:callbackBodyType
 : 可选，字符串类型（String），用于设置文件上传成功后，七牛云存储服务端向客户方的业务服务器发送回调请求的 `Content-Type`。
 
 :customer
