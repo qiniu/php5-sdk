@@ -3,6 +3,9 @@
 
 require_once('authtoken.php');
 
+$QBOX_ACCESS_KEY = '<Please apply your access key>';
+$QBOX_SECRET_KEY = '<Dont send your secret key to anyone>';
+
 $opts = array(
     "scope"			=> "test_bucket",
     "expiresIn"		=> 3600,

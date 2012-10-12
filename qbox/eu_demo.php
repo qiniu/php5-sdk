@@ -3,11 +3,14 @@
 require('eu.php');
 require('utils.php');
 
-$customer = '001';
+$QBOX_ACCESS_KEY = '<Please apply your access key>';
+$QBOX_SECRET_KEY = '<Dont send your secret key to anyone>';
 
 $client = QBox_OAuth2_NewClient();
 
 $eu =  QBox_EU_NewService($client);
+
+$customer = '001';
 
 list($code, $error) = $eu->SetWatermark($customer, array('text' => 'abc'));
 echo time() . " ===> SetWatermark result:\n";

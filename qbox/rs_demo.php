@@ -9,6 +9,9 @@ define('DEMO_DOMAIN', 'test.dn.qbox.me');
 
 echo time() . "===> Start demo ...\n";
 
+$QBOX_ACCESS_KEY = '<Please apply your access key>';
+$QBOX_SECRET_KEY = '<Dont send your secret key to anyone>';
+
 $client = QBox_OAuth2_NewClient();
 
 $bucket = 'bucket';
@@ -21,6 +24,24 @@ if ($code == 200) {
 } else {
 	$msg = QBox_ErrorMessage($code,$error);
 	echo "Drop failed:$code - $msg\n";
+}
+
+list($code, $error) = $rs->Mkbucket($bucket);
+echo time() . " ===> Mkbucket result:\n";
+if ($code == 200) {
+	echo "Mkbucket Success!\n";
+} else {
+	$msg = QBox_ErrorMessage($code, $error);
+	echo "Buckets failed: $code - $msg\n";
+}
+
+list($result, $code, $error) = $rs->Buckets();
+echo time() . " ===> Bucukets result:\n";
+if ($code == 200) {
+	var_dump($result);
+} else {
+	$msg = QBox_ErrorMessage($code, $error);
+	echo "Buckets failed: $code - $msg\n";
 }
 
 $key = '000-default';
@@ -129,7 +150,7 @@ if ($action == 'drop') {
 }
 else if ($action == 'drop') {
 	list($code, $error) = $rs->Drop();
-	echo time() . "===> Drop table result:\n";
+	echo time() . "===> Drop bucket result:\n";
 	if ($code == 200) {
 		echo "Drop ok!\n";
 	} else {
