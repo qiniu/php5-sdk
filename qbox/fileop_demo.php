@@ -4,12 +4,24 @@
 require_once('rs.php');
 require_once('fileop.php');
 
+$QBOX_ACCESS_KEY = '<Please apply your access key>';
+$QBOX_SECRET_KEY = '<Dont send your secret key to anyone>';
+
 $client = QBox_OAuth2_NewClient();
 
-$tblName = 'tblName';
-$rs = QBox_RS_NewService($client, $tblName);
+$bucketName = 'bucketName';
+$rs = QBox_RS_NewService($client, $bucketName);
 
 $key = '2.jpg';
+
+list($code, $error) = $rs->Mkbucket($bucket);
+echo time() . " ===> Mkbucket result:\n";
+if ($code == 200) {
+	echo "Mkbucket Success!\n";
+} else {
+	$msg = QBox_ErrorMessage($code, $error);
+	echo "Buckets failed: $code - $msg\n";
+}
 
 list($result, $code, $error) = $rs->Get($key, $key);
 echo "===> Get $key result:\n";

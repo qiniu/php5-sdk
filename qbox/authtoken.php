@@ -4,6 +4,8 @@ require_once('utils.php');
 
 function QBox_MakeAuthToken(array $params)
 {
+    global $QBOX_ACCESS_KEY, $QBOX_SECRET_KEY;
+
 	if (isset($params['expiresIn'])) {
 		$expiresIn = $params['expiresIn'];
 		unset($params['expiresIn']);
@@ -16,9 +18,9 @@ function QBox_MakeAuthToken(array $params)
 	unset($params['deadline']);
 	$params['expiresIn'] = $expiresIn;
 
-	$digest = hash_hmac('sha1', $signature, QBOX_SECRET_KEY, true);
+	$digest = hash_hmac('sha1', $signature, $QBOX_SECRET_KEY, true);
 	$encoded_digest = QBox_Encode($digest);
 
-	return QBOX_ACCESS_KEY . ":$encoded_digest:$signature";
+	return $QBOX_ACCESS_KEY . ":$encoded_digest:$signature";
 }
 
