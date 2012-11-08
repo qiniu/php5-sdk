@@ -36,7 +36,7 @@ function QBox_RS_PutFile($url, $bucketName, $key, $mimeType, $localFile, $custom
 /**
  * func UploadFile(upToken, key, mimeType, localFile, customMeta, callbackParams string) => (data PutRet, code int, err Error)
  */
-function QBox_RS_UploadFile($upToken, $bucketName, $key, $mimeType, $localFile, $customMeta = '', $callbackParams = '') {
+function QBox_RS_UploadFile($upToken, $bucketName, $key, $mimeType, $localFile, $customMeta = '', $callbackParams = '', $rotate = '') {
 
 	if ($mimeType === '') {
 		$mimeType = 'application/octet-stream';
@@ -46,6 +46,9 @@ function QBox_RS_UploadFile($upToken, $bucketName, $key, $mimeType, $localFile, 
 	if ($customMeta !== '') {
 		$action .= '/meta/' . QBox_Encode($customMeta);
 	}
+	if ($rotate !== '') {
+		$action .= '/rotate/' . $rotate;
+	} 
 	$params = array('action' => $action, 'file' => "@$localFile", 'auth' => $upToken);
 	if ($callbackParams !== '') {
 		if (is_array($callbackParams)) {
