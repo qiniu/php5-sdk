@@ -47,7 +47,7 @@ function QBox_RS_UploadFile($upToken, $bucketName, $key, $mimeType, $localFile, 
 		$action .= '/meta/' . QBox_Encode($customMeta);
 	}
 	if ($rotate !== '') {
-		$action .= '/rotate/' . QBox_Encode($rotate);
+		$action .= '/rotate/' . $rotate;
 	} 
 	$params = array('action' => $action, 'file' => "@$localFile", 'auth' => $upToken);
 	if ($callbackParams !== '') {
