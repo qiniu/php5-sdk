@@ -6,7 +6,9 @@ title: PHP5 SDK | 七牛云存储
 
 此 SDK 适用于 PHP 5.1.0 及其以上版本。
 
-SDK源码地址：[https://github.com/qiniu/php5-sdk/tags](https://github.com/qiniu/php5-sdk/tags)
+SDK源码地址：<https://github.com/qiniu/php5-sdk/tags>
+
+SDK样例程序下载：<https://github.com/qiniu/php5-sdk-example>
 
 **应用接入**
 
@@ -1157,5 +1159,7 @@ public/callback.php 源码如下：
 以上已经是一个比较完整的文件上传并执行相应的回调的操作流程，想必您对整个上传和回调处理流程已经有比较深刻的认知。
 
 如果您需要对上传组件的界面风格和样式进行调整，请编辑 `public/assets/js/fileprogress.js` 和 `public/assets/css/` 目录里边的相应css文件。
+
+SDK样例程序下载：<https://github.com/qiniu/php5-sdk-example>
 
 祝您使用愉快！:)
