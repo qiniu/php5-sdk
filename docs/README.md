@@ -196,7 +196,7 @@ escape | int | 可选 | 可选值 0 或者 1，缺省为 0。值为 1 表示 cal
     /**
      * 服务端直传文件
      */
-    $upToken = QBox_MakeAuthToken(array('expiresIn' => 3600));
+    $upToken = QBox_MakeAuthToken(array('expiresIn' => 3600, …));
 	list($result, $code, $error) = QBox_RS_UploadFile($uploadToken,
 	                                                  $bucket,
 	                                                  $key,
