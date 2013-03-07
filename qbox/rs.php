@@ -186,6 +186,17 @@ class QBox_RS_Service
 	}
 	
 	/**
+	 * func Move($srcKey, $destKey string) => (code int, err Error)
+	 * 移动资源
+	 */
+	public function Move($srcKey, $destKey) {
+		$entryURISrc = $this->Bucket . ':' . $srcKey;
+		$entryURIDest = $this->Bucket . ':' . $destKey;
+		$url = QBOX_RS_HOST . '/move/' . QBox_Encode($entryURISrc) . '/' .QBox_Encode($entryURIDest);
+		return QBox_OAuth2_CallNoRet($this->Conn, $url);
+	}
+	
+	/**
 	 * func Delete(key string) => (code int, err Error)
 	 * 删除资源
 	 */
