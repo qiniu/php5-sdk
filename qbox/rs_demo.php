@@ -50,6 +50,8 @@ $friendName = 'rs_demo.php';
 $key2 = '000-default2';
 $friendName2 = 'rs_demo2.php';
 
+$key3 = '000-default3';
+
 $upToken = QBox_MakeAuthToken(array('expiresIn' => 3600));
 echo time() . " ===> Uptoken: $upToken\n";
 
@@ -91,6 +93,7 @@ if ($code == 200) {
 	echo "Stat failed: $code - $msg\n";
 	exit(-1);
 }
+
 
 list($result, $code, $error) = $rs->BatchGet(array($key, $key2));
 echo time() . " ===> BatchGet $key result:\n";
@@ -159,3 +162,12 @@ else if ($action == 'drop') {
 	}
 }
 
+list($code, $error) = $rs->Move($key, $key3);
+echo time() . "===> Move $key3 result:\n";
+if ($code == 200) {
+	var_dump($result);
+} else {
+	$msg = QBox_ErrorMessage($code, $error);
+	echo "Move failed: $code - $msg\n";
+	exit(-1);
+}
