@@ -1,5 +1,11 @@
 ## CHANGE LOG
 
+### v3.3.0
+
+1. 更新 docs/README.md #16
+2. 新增 move() #17
+3. 新增 QBox_MakeDownloadToken() #18
+
 ### v3.2.1
 
 allow images uploaded auto-orient.

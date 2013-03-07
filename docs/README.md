@@ -56,12 +56,12 @@ title: PHP5 SDK 使用指南 | 七牛云存储
 1. [开通七牛开发者帐号](https://dev.qiniutek.com/signup)
 2. [登录七牛开发者自助平台，查看 Access Key 和 Secret Key](https://dev.qiniutek.com/account/keys) 。
 
-在获取到 Access Key 和 Secret Key 之后，您需要修改sdk中中的config文件：
+在获取到 Access Key 和 Secret Key 之后，且 require 相应的 SDK 文件之后，您需要在全局配置如下两行代码：
 
-	$QBOX_ACCESS_KEY	= YOUR_APP_ACCESS_KEY;
-	$QBOX_SECRET_KEY	= YOUR_APP_SECRET_KEY;
+    $QBOX_ACCESS_KEY = YOUR_APP_ACCESS_KEY;
+    $QBOX_SECRET_KEY = YOUR_APP_SECRET_KEY;
 
-<a name="ror-init"></a>
+<a name="Usage"></a>
 
 ## 使用
 
@@ -80,17 +80,19 @@ title: PHP5 SDK 使用指南 | 七牛云存储
 
 `QBox_MakeAuthToken()` 函数原型如下：
 
-    QBox_MakeAuthToken($params)
     $params = array(
-    	‘scope’              => $targetBucket,
+        ‘scope’              => $targetBucket,
         ’expiresIn‘          => $expiresInSeconds,
         ‘callbackUrl’        => $callbackUrl,
         ’callbackBodyType‘   => $callbackBodyType,
         ‘customer’           => $endUserId,
         ’escape‘             => $allowUploadCallbackApi,
-        'asyncOps'			  => $asyncOptions,
-        'returnBody'		  => $returnBody
+        'asyncOps'           => $asyncOptions,
+        'returnBody'         => $returnBody
     )
+
+    $uploadToken = QBox_MakeAuthToken($params);
+
 **参数**
 
 scope
@@ -169,25 +171,25 @@ $rotate
 **返回值**
 返回值结构：
 
-	array(
-		$result, // 成功时为哈希数组，失败时为空
-		$code,	 //	成功时为200 
-		$error   //	错误描述
-	)
-	
+    array(
+        $result,   // 成功时为哈希数组，失败时为空
+        $code,     // 成功时为200
+        $error     // 错误描述
+    )
+
 上传成功，返回一个数组格式如下：
 
-	array(3) {
-	  [0]=>
-	  array(1) {
-	    ["hash"]=>
-	    string(28) "Fre7pFdLW6nNt4cPoQBTyCCqfE_V"
-	  }
-	  [1]=>
-	  int(200)
-	  [2]=>
-	  NULL
-	}
+    array(3) {
+      [0]=>
+      array(1) {
+        ["hash"]=>
+        string(28) "Fre7pFdLW6nNt4cPoQBTyCCqfE_V"
+      }
+      [1]=>
+      int(200)
+      [2]=>
+      NULL
+    }
 
 
 上传失败，会返回非`200`的response code,及对应的错误描述。
@@ -250,11 +252,12 @@ $rotate
 
 `<downloadToken>` 可以使用 SDK 提供的如下方法生成：
 
-    QBox_MakeDownloadToken($params)
     $params = array(
-    	'expiresIn'		=> $expiresIn
-    	'pattern'		=> $pattern 
-    )
+        'expiresIn'      => $expiresIn,
+        'pattern'        => $pattern
+    );
+
+    $downloadToken = QBox_MakeDownloadToken($params);
 
 **参数**
 
@@ -300,9 +303,9 @@ pattern
 
 #### 查看单个文件属性信息
 
-	$client = QBox_OAuth2_NewClient();
-	$rs = QBox_RS_NewService($client, $bucket);
-	$rs->Stat($key);
+    $client = QBox_OAuth2_NewClient();
+    $rs = QBox_RS_NewService($client, $bucket);
+    $rs->Stat($key);
 
 可以通过 `QBox_RS_NewService()` 的实例提供的 `Stat()` 函数，来查看某个已上传文件的属性信息。
 
@@ -318,11 +321,11 @@ $key
 
 返回值结构：
 
-	array(
-		$result, // 成功时为包含文件属性信息的数组，失败时为空
-		$code,	 //	成功时为200 失败时为非200
-		$error   //	错误描述
-	)
+    array(
+        $result, // 成功时为包含文件属性信息的数组，失败时为空
+        $code,   // 成功时为200 失败时为非200
+        $error   // 错误描述
+    )
 
 如果请求失败，`$result`为`null`；否则为如下一个 `Hash` 类型的结构：
 
@@ -349,9 +352,9 @@ putTime
 
 ### 移动单个文件
 
-    $rs->Move($srcKey, $destKey)
+    $rs->Move($srcKey, $destKey);
 
-`QBox_RS_Service()` 实例化对象的`Move` 函数提供了从指定的 `bucket` 将文件的key 从`$srcKey` 改为`$destKey`。
+`QBox_RS_Service()` 实例化对象 `$rs` 的`Move` 函数提供了从指定的 `bucket` 将文件的key 从`$srcKey` 改为`$destKey`。
 
 **参数**
 
@@ -361,11 +364,11 @@ $destKey: 必须，字符串类型（String），指定要复制到目标空间�
 **返回值**
 
 返回值结构：
-	
-	array(
-		$code,
-		$error
-	)
+
+    array(
+        $code,
+        $error
+    )
 
 如果删除成功，$code返回 `200`，否则返回非200 。
 
@@ -383,11 +386,11 @@ $key
 **返回值**
 
 返回值结构：
-	
-	array(
-		$code,
-		$error
-	)
+
+    array(
+        $code,
+        $error
+    )
 
 如果删除成功，$code返回 `200`，否则返回非200 。
 
@@ -401,12 +404,12 @@ $key
 #### 批量获取文件属性信息
 
     BatchGet(array $params)
-    
+
     $params = array(
-    	$param1,
-    	$param2,
-    	...	
-    ) 
+        $param1,
+        $param2,
+        ...
+    )
 
 `BatchGet` 提供批量获取文件属性信息（含下载链接）的功能。
 
@@ -418,23 +421,23 @@ $param1, $param2 … 有两种情况:
 2.  array 类型,结构为:
 
     array('key' => $key, 'attName' => $attName, 'expires' => 3600)
-	其中`key`为文件的`key`, `attName`、`expires` 为可选,分别表示下载文件的友好名字，和下载链接的有效时间单位秒(s)
+    其中`key`为文件的`key`, `attName`、`expires` 为可选,分别表示下载文件的友好名字，和下载链接的有效时间单位秒(s)
 
 
 **返回值**
 
 返回值结构：
 
-	array(
-		$result, // 成功时为包含文件属性信息的数组，失败时为空
-		$code,	 //	成功时为200 失败时为非200
-		$error   //	错误描述
-	)
+    array(
+        $result, // 成功时为包含文件属性信息的数组，失败时为空
+        $code,   // 成功时为200 失败时为非200
+        $error   // 错误描述
+    )
 
 
 `$code` 为 200 表示所有 keys 全部获取成功，`$code` 若为 298 表示部分获取成功。如果请求失败，`$result`为空,否则`$result`为一个 `Array` 类型的结构:
-	
-	$result = array(
+
+    $result = array(
         {
             "code" => 200,
             "data" => {
@@ -445,8 +448,8 @@ $param1, $param2 … 有两种情况:
                 "url"      => "http://iovip.qbox.me/file/<an-authorized-token>"
             }
         },
-        ...		
-	)
+        ...
+    )
 
 
 <a name="cloud-processing"></a>
@@ -512,7 +515,7 @@ $mogrify_options
 `$mogrify_options` 对象具体的规格如下：
 
     $mogrify_options = array(
-        "auto_orient"=> <TrueOrFalse>    
+        "auto_orient"=> <TrueOrFalse>
         "thumbnail"  => <ImageSizeGeometry>,
         "gravity"    => <GravityType>, =NorthWest, North, NorthEast, West, Center, East, SouthWest, South, SouthEast
         "crop"       => <ImageSizeAndOffsetGeometry>,
@@ -536,10 +539,10 @@ $mogrify_options
 
     $client = QBox_OAuth2_NewClient();
     $imgrs  = QBox_RS_NewService($client, "thumbnails_bucket");
-    
+
     list($result, $code, $error) = $imgrs->ImageMogrifyAs($target_key, $src_img_url, $mogrify_options);
-    
-函数原型：    
+
+函数原型：
 
     ImageMogrifyAs($target_key, $src_img_url, $mogrify_options);
 
@@ -560,7 +563,7 @@ $mogrify_options
 `$mogrify_options` 对象具体的规格如下：
 
     $mogrify_options = array(
-        "auto_orient"  => <TrueOrFalse>    
+        "auto_orient"  => <TrueOrFalse>
         "thumbnail"    => <ImageSizeGeometry>,
         "gravity"      => <GravityType>, =NorthWest, North, NorthEast, West, Center, East, SouthWest, South, SouthEast
         "crop"         => <ImageSizeAndOffsetGeometry>,
@@ -581,19 +584,19 @@ $mogrify_options
 
 返回值结构：
 
-	array(
-		$result, // 成功时为hash数组，失败时为空
-		$code,	 //	成功时为200 失败时为非200
-		$error   //	错误描述
-	)
+    array(
+        $result,   // 成功时为hash数组，失败时为空
+        $code,     // 成功时为200 失败时为非200
+        $error     // 错误描述
+    )
 
 如果请求失败，返回码`$code`为非200；否则，`$code`为200 `$result`为如下一个 `Hash` 类型的结构：
 
     array(1) {
-  		["hash"]=>
-  		string(28) "FjuSV2RblCbN1Bmv88nJi3n2N77Q"
-	}
-    
+          ["hash"]=>
+          string(28) "FjuSV2RblCbN1Bmv88nJi3n2N77Q"
+    }
+
 
 <a name="Contributing"></a>
 
