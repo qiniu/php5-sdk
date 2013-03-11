@@ -16,3 +16,13 @@ $upToken = QBox_MakeAuthToken($opts);
 
 var_dump($upToken);
 
+
+$domain = "test.qiniudn.com";
+$params = array("expiresIn" => 3600, "pattern" => "$domain/*");
+
+$dnToken = QBox_MakeDownloadToken($params);
+
+$dnUrl = "http://$domain/file_key?token=".$dnToken;
+
+echo file_get_contents($dnUrl);
+

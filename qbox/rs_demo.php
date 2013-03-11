@@ -12,6 +12,7 @@ echo time() . "===> Start demo ...\n";
 $QBOX_ACCESS_KEY = '<Please apply your access key>';
 $QBOX_SECRET_KEY = '<Dont send your secret key to anyone>';
 
+
 $client = QBox_OAuth2_NewClient();
 
 $bucket = 'bucket';
@@ -141,7 +142,7 @@ echo time() . "===> Display $key contents:\n";
 echo file_get_contents($result['url']);
 
 $action = 'delete';
-if ($action == 'drop') {
+if ($action == 'delete') {
 	list($code, $error) = $rs->Delete($key);
 	echo time() . "===> Delete $key result:\n";
 	if ($code == 200) {
