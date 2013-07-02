@@ -1,5 +1,9 @@
 # Qiniu Resource Storage SDK for PHP
 
+[![Build Status](https://api.travis-ci.org/qiniu/php-sdk.png?branch=master)](https://travis-ci.org/qiniu/php-sdk)
+
+[![Qiniu Logo](http://qiniutek.com/images/logo-2.png)](http://qiniu.com/)
+
 # 关于
 
 此 PHP SDK 的新版本内容已经迁移到 https://github.com/qiniu/php-sdk
