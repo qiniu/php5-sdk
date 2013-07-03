@@ -10,7 +10,7 @@
 
 # 下载
 
-你可以去这里下载最新 release 的版本：
+你可以去下面链接下载最新 release 的版本：
 
 * https://github.com/qiniu/php-sdk/releases
 
